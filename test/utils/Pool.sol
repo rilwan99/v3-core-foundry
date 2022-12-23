@@ -5,6 +5,7 @@ import "forge-std/Test.sol";
 import "../../src/test/TestERC20.sol";
 import "../../src/UniswapV3Factory.sol";
 import "../../src/UniswapV3PoolDeployer.sol";
+// import "../../src/interfaces/callback/IUniswapV3MintCallback.sol";
 
 contract PoolFixture is Test {
     TestERC20[] tokens;
@@ -12,6 +13,11 @@ contract PoolFixture is Test {
     address wallet;
     address trader;
 
+    event Initialize(uint160 sqrtPriceX96, int24 tick);
+    event IncreaseObservationCardinalityNext(
+        uint16 observationCardinalityNextOld,
+        uint16 observationCardinalityNextNew
+    );
 
     function setUp() public virtual {
 
@@ -30,4 +36,10 @@ contract PoolFixture is Test {
         trader = vm.addr(2);
     }
 
+    function uniswapV3MintCallback(
+        uint256 amount0Owed,
+        uint256 amount1Owed,
+        bytes calldata data
+    ) external  {
+    }
 }
